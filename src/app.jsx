@@ -44,8 +44,21 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     let fm = require('font-manager')
+    let compareFonts = (a, b) => {
+      let aName = a.postscriptName;
+      let bName = b.postscriptName;
+      if (aName < bName) {
+        return -1;
+      }
+
+      if (aName > bName) {
+        return 1;
+      }
+
+      return 0;
+    }
     this.state = {
-      fonts: fm.getAvailableFontsSync().slice(),
+      fonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
       sampleText: "The Quick Brown Fox Jumped Over the Lazy Dog",
       fontSize: 18
     }
