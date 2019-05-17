@@ -67,10 +67,10 @@ export default class App extends React.Component {
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
   }
 
-  renderFontSample(font) {
+  renderFontSample(font, index) {
     return (
       <FontSample
-        key={font.postscriptName}
+        key={font.postscriptName + index}
         sampleText={this.state.sampleText}
         fontName={font.postscriptName}
         fontSize={this.state.fontSize}
@@ -87,8 +87,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    const fontSamples = this.state.fonts.map((font) => {
-      return (this.renderFontSample(font));
+    const fontSamples = this.state.fonts.map((font, index) => {
+      return (this.renderFontSample(font, index));
     });
 
     return (
