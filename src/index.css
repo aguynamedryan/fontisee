@@ -1,0 +1,13 @@
+div.font-sample {
+  margin: 1em;
+  border-top-color: black;
+  border-top-style: dashed;
+  border-top-width: thin;
+}
+
+p.font-title {
+  margin: 0;
+}
+p.font-example {
+  margin: 0;
+}
