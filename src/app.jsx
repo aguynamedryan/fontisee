@@ -12,6 +12,17 @@ function FontSize(props) {
   )
 }
 
+function FontFilter(props) {
+  return (
+    <div className="font-filter">
+      <textarea
+        label="Font Filter"
+        onChange={props.onChange}
+        value={props.fontFilter} />
+    </div>
+  )
+}
+
 function SampleText(props) {
   return (
     <div className="sample-text">
@@ -59,12 +70,15 @@ export default class App extends React.Component {
     }
     this.state = {
       fonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
+      allFonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
       sampleText: "The Quick Brown Fox Jumped Over the Lazy Dog",
+      fontFilter: "",
       fontSize: 18
     }
 
     this.handleSampleTextChange = this.handleSampleTextChange.bind(this)
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
+    this.handleFontFilterChange = this.handleFontFilterChange.bind(this);
   }
 
   renderFontSample(font, index) {
@@ -78,8 +92,24 @@ export default class App extends React.Component {
     );
   }
 
+  filterFonts(fonts) {
+    let fontList = fonts.split(/\r\n|\r|\n/).filter(line => line != "");
+
+    if (fontList.length == 0) {
+        return this.state.allFonts;
+    }
+
+    let regStr = fontList.join("|");
+    let reggy = new RegExp(regStr, "i");
+    return this.state.allFonts.filter(font => reggy.test(font.postscriptName))
+  }
+
   handleSampleTextChange(event) {
     this.setState({sampleText: event.target.value})
+  }
+
+  handleFontFilterChange(event) {
+    this.setState({ fontFilter: event.target.value, fonts: this.filterFonts(event.target.value).slice() })
   }
 
   handleFontSizeChange(event) {
@@ -98,6 +128,7 @@ export default class App extends React.Component {
         </div>
         <SampleText onChange={this.handleSampleTextChange} sampleText={this.state.sampleText} />
         <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
+        <FontFilter onChange={this.handleFontFilterChange} fontFilter={this.state.fontFilter} />
         <div>
           {fontSamples}
         </div>
