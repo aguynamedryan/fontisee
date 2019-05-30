@@ -54,7 +54,9 @@ function FontSample(props) {
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    let fm = require('font-manager')
+
+    let fm = require('font-manager');
+
     let compareFonts = (a, b) => {
       let aName = a.postscriptName;
       let bName = b.postscriptName;
@@ -67,18 +69,19 @@ export default class App extends React.Component {
       }
 
       return 0;
-    }
+    };
+
     this.state = {
       fonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
       allFonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
       sampleText: "The Quick Brown Fox Jumped Over the Lazy Dog",
       fontFilter: "",
       fontSize: 18
-    }
+    };
 
-    this.handleSampleTextChange = this.handleSampleTextChange.bind(this)
-    this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
     this.handleFontFilterChange = this.handleFontFilterChange.bind(this);
+    this.handleSampleTextChange = this.handleSampleTextChange.bind(this);
+    this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
   }
 
   renderFontSample(font, index) {
@@ -101,19 +104,19 @@ export default class App extends React.Component {
 
     let regStr = fontList.join("|");
     let reggy = new RegExp(regStr, "i");
-    return this.state.allFonts.filter(font => reggy.test(font.postscriptName))
+    return this.state.allFonts.filter(font => reggy.test(font.postscriptName));
   }
 
   handleSampleTextChange(event) {
-    this.setState({sampleText: event.target.value})
+    this.setState({sampleText: event.target.value});
   }
 
   handleFontFilterChange(event) {
-    this.setState({ fontFilter: event.target.value, fonts: this.filterFonts(event.target.value).slice() })
+    this.setState({ fontFilter: event.target.value, fonts: this.filterFonts(event.target.value).slice() });
   }
 
   handleFontSizeChange(event) {
-    this.setState({fontSize: parseInt(event.target.value, 10)})
+    this.setState({fontSize: parseInt(event.target.value, 10)});
   }
 
   render() {
