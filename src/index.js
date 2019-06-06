@@ -1,6 +1,24 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
+
+let buildMenu = () => {
+  let template = [{
+      label: "FontISee",
+      submenu: [
+          { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+          { type: "separator" },
+          { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+      ]}, {
+      label: "Edit",
+      submenu: [
+          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+      ]}
+  ];
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -38,7 +56,10 @@ const createWindow = async () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow(); 
+  buildMenu();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
