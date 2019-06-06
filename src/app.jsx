@@ -46,7 +46,7 @@ function FontSample(props) {
         fontFamily: props.fontName,
           fontSize: props.fontSize
       }}>
-        {props.sampleText}
+        {`${props.sampleText}`}
       </p>
     </div>
   );
@@ -74,7 +74,7 @@ export default class App extends React.Component {
     this.state = {
       fonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
       allFonts: fm.getAvailableFontsSync().slice().sort(compareFonts),
-      sampleText: "The Quick Brown Fox Jumped Over the Lazy Dog",
+      sampleText: "The Quick Brown Fox\nJumped Over the Lazy Dog",
       fontFilter: "",
       fontSize: 18
     };

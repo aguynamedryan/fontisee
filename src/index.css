@@ -10,4 +10,5 @@ p.font-title {
 }
 p.font-example {
   margin: 0;
+  white-space: pre-line;
 }
